@@ -26,6 +26,8 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
+Route::group(['middleware' => ['web'], 'prefix' => 'api/v1', 'namespace' => 'API\V1'], function () {
+	Route::resource('comments', 'CommentController', ['only' => [
+	    'index', 'store'
+	]]);
 });
