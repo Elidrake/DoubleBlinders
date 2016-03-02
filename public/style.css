@@ -1,0 +1,103 @@
+/* ------ GENERAL LAYOUT AND DESIGN ------ */
+html {
+  font-family: -apple-system, 'Helvetica Neue', Verdana, Geneva, sans-serif;
+  text-align: center;
+}
+
+body {
+/* 	max-width: 550px; */
+	width: auto;
+	display: inline-block;
+	text-align: left;
+}
+
+section {
+  margin-top: 100px;
+}
+
+article {
+  padding-bottom: 100px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* header */
+header {
+	text-align: center;
+}
+
+header h1 {
+	font-family: courier;
+	font-weight: 200;
+	margin: 25px auto 0 auto;
+	display: inline-block;
+}
+
+pre {
+	white-space: pre-wrap;
+}
+
+code {
+	font-family: courier;
+	font-size: 0.9em;
+}
+
+/* footnotes */
+header .fn {
+	border: none;
+}
+
+header .footnote {
+	text-align: left;
+	margin-bottom: 14px;
+}
+
+header .footnote p {
+	margin: 14px 0;
+	color: #000000;
+	font-size: 0.8em;
+}
+
+.cmnt {
+	border: none;
+	background-color: #ffffff;
+	cursor: pointer;
+	padding: 0;
+	margin: 0;
+}
+
+.comment {
+	display: block;
+	height: auto;
+	background-color: #f0f0f0;
+	padding: 0 17px;
+	width: 101%;
+	margin-left: -19px;
+	opacity: 1;
+	border-top-width: 4px;
+	border-top-style: double;
+	border-bottom-width: 4px;
+	border-bottom-style: double;
+	border-color: #CC0033;
+	border-left: none;
+	border-right: none;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.placeholder {
+	color: #828282;
+}
+
+.save {
+	border: none;
+	background-color: #f0f0f0;
+	cursor: pointer;
+	padding: 5px 0;
+	color: #003366;
+}
+
+.save:hover {
+	color: #CC0033;
+}
