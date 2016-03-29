@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware(['web','auth']);
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +26,22 @@ Route::get('/', function () {
 |
 */
 
+Route::group(['middleware' => ['web']], function (){
+  Route::controller('account', 'UsersUtilityController');
+});
 Route::group(['middleware' => ['web'], 'prefix' => 'api/v1', 'namespace' => 'API\V1'], function () {
-	Route::resource('comments', 'CommentController', ['only' => [
-	    'index', 'store'
-	]]);
+  Route::resource('account', 'AccountCreateController', ['only' => [
+      'store'
+  ]]);
+  Route::resource('account/login', 'AccountLoginController', ['only' => [
+      'store', 'destroy'
+  ]]);
+  Route::group(['middleware' => ['auth']], function(){
+    Route::resource('files', 'FileController', ['only' => [
+        'index', 'store'
+    ]]);
+    Route::resource('files.comments', 'FileCommentController', ['only' => [
+        'index', 'store'
+    ]]);
+  });
 });

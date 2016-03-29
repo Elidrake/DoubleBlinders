@@ -23,7 +23,6 @@ class Comment extends Model
 	public static $storageRulesV1 = array(
 		'lineNumber'=>'required|integer',
 		'charNumber'=>'required|integer',
-		'userName'=>'required|string',
 		'content'=>'required|string'
 	);
 
