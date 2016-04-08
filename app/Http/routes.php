@@ -15,6 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware(['web','auth']);
 
+Route::get('/upload', function () {
+    return view('upload');
+})->middleware(['web','auth']);
+
+Route::get('/review', function () {
+    return view('review');
+})->middleware(['web','auth']);
+
+Route::get('/comments', function () {
+    return view('comments');
+})->middleware(['web','auth']);
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -31,7 +42,7 @@ Route::group(['middleware' => ['web']], function (){
 });
 Route::group(['middleware' => ['web'], 'prefix' => 'api/v1', 'namespace' => 'API\V1'], function () {
   Route::resource('account', 'AccountCreateController', ['only' => [
-      'store'
+      'index', 'store'
   ]]);
   Route::resource('account/login', 'AccountLoginController', ['only' => [
       'store', 'destroy'

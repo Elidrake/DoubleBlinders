@@ -2,12 +2,22 @@
 
 use App\Http\Controllers\Controller;
 use DB, Auth, Redirect, Input, Validator, Mail, Hash, Carbon\Carbon;
-use App\User;
+use App\User, Response;
 
 class AccountCreateController extends Controller {
 
 	public function __construct(){
 		$this->middleware('beforeAccountCreateV1', ['only' => ['store']]);
+	}
+
+	public function index()
+	{
+		$account = Auth::user();
+
+		return Response::json(array(
+			'account'=>$account),
+			200
+		);
 	}
 
 	/**
