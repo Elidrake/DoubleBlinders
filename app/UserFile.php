@@ -26,15 +26,15 @@ class UserFile extends Model
 
 	/**
 	 * Gets the all Files from storage.
-	 * Formatted under V1 specifications.
+	 * Formatted under V2 specifications.
 	 *
 	 * @return DB Object
 	 */
 
-	public function returnV1(){
+	public function return(){
 		$files = DB::table('files')
 			->leftJoin('users', 'files.createdBy', '=', 'users.id')
-			->select('files.id', 'users.name as createdBy', 'files.fileContent',
+			->select('files.id', 'files.createdBy', 'files.fileContent',
 					 'files.fileType', 'files.created_at as createdAt')
 			->get();
 

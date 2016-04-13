@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class ModifyCommentsTable extends Migration {
+class ModifyCommentsTableAgain extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -14,8 +14,7 @@ class ModifyCommentsTable extends Migration {
 	{
 		Schema::table('comments', function(Blueprint $table)
 		{
-      $table->dropColumn('userName');
-      $table->integer('createdBy')->unsigned();
+      		$table->integer('groupId')->unsigned();
 		});
 	}
 
@@ -29,8 +28,7 @@ class ModifyCommentsTable extends Migration {
 	{
 		Schema::table('comments', function(Blueprint $table)
 		{
-	      $table->dropColumn('createdBy');
-	      $table->string('userName');
+	      $table->dropColumn('groupId');
 		});
 	}
 

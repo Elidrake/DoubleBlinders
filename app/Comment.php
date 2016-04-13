@@ -27,6 +27,25 @@ class Comment extends Model
 	);
 
 	/**
+	 * Gets the Comments under specified Group and File.
+	 * Formatted under V2 specifications.
+	 *
+	 * @return DB Object
+	 */
+
+	public function returnV2($groupId, $fileId){
+		$comments = DB::table('files')
+			->leftJoin('files_comments', 'files.id', '=', 'files_comments.file_id')
+			->leftJoin('comments', 'files_comments.comment_id', '=', 'comments.id')
+			->where('files.id', $fileId)
+			->where('comments.groupId', $groupId)
+			->select('comments.*')
+			->get();
+
+		return $comments;
+	}
+
+	/**
 	 * Gets the all Comments from storage.
 	 * Formatted under V1 specifications.
 	 *

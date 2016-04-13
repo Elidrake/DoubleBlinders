@@ -33,7 +33,7 @@ class AccountCreateController extends Controller {
 		$input = Input::all();
 		$user = new User;
 
-    //Storage
+    	//Storage
 		$user->name = $input['name'];
 		$user->email = strtolower($input['email']);
 		$user->password = Hash::make($input['password']);

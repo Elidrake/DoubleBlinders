@@ -47,12 +47,15 @@ Route::group(['middleware' => ['web'], 'prefix' => 'api/v1', 'namespace' => 'API
   Route::resource('account/login', 'AccountLoginController', ['only' => [
       'store', 'destroy'
   ]]);
-  Route::group(['middleware' => ['auth']], function(){
+});
+Route::group(['middleware' => ['web','auth'], 'prefix' => 'api/v2', 'namespace' => 'API\V2'], function () {
     Route::resource('files', 'FileController', ['only' => [
         'index', 'store'
     ]]);
-    Route::resource('files.comments', 'FileCommentController', ['only' => [
+    Route::resource('groups', 'GroupController', ['only' => [
         'index', 'store'
     ]]);
-  });
+    Route::resource('groups.files.comments', 'GroupFileCommentController', ['only' => [
+        'index', 'store'
+    ]]);
 });

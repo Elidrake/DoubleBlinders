@@ -51,5 +51,6 @@ class Kernel extends HttpKernel
         'beforeAccountCreateV1' => \App\Http\Middleware\API\V1\BeforeAccountCreate::class,
         'beforeAccountLoginV1' => \App\Http\Middleware\API\V1\BeforeAccountLogin::class,
         'beforeFileStoreV1' => \App\Http\Middleware\API\V1\BeforeFileStore::class,
+        'beforeGroupStoreV2' => \App\Http\Middleware\API\V2\BeforeGroupStore::class,
     ];
 }
