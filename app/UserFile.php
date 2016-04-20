@@ -31,7 +31,7 @@ class UserFile extends Model
 	 * @return DB Object
 	 */
 
-	public function return(){
+	public function returner(){
 		$files = DB::table('files')
 			->leftJoin('users', 'files.createdBy', '=', 'users.id')
 			->select('files.id', 'files.createdBy', 'files.fileContent',

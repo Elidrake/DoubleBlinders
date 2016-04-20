@@ -20,7 +20,7 @@ class GroupController extends Controller {
 	public function index()
 	{
 		$group = new Group;
-		$groups = $group->return();
+		$groups = $group->returner();
 
 		return Response::json(array(
 			'groups'=>$group),

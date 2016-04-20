@@ -22,7 +22,7 @@ class FileController extends Controller {
 		$input = Input::all();
 		$file = new UserFile;
 
-		$files = $file->return();
+		$files = $file->returner();
 
 		return Response::json(array(
 			'files'=>$files),

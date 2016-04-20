@@ -25,7 +25,7 @@ class CreateGroupsTable extends Migration
             $table->primary(['user_id','group_id']);
             $table->unique(['user_id','group_id']);
             $table->integer('role');
-        })
+        });
     }
 
     /**

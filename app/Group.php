@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
+use DB, Auth;
 
 class Group extends Model
 {
@@ -32,7 +32,7 @@ class Group extends Model
 	 * @return DB Object
 	 */
 
-	public function return(){
+	public function returner(){
 		$my_groups = DB::table('groups')
 			->leftJoin('users_groups', 'groups.id', '=', 'users_groups.group_id')
 			->where('users_groups.user_id', Auth::id())
