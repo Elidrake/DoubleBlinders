@@ -39,7 +39,7 @@ class GroupsFilesController extends Controller {
 
 	public function store($group_id)
 	{
-		$file_id = input['field'];
+		$file_id = input['fieId'];
 
 		//Create Link
 		$groups_files = new GroupFile;
