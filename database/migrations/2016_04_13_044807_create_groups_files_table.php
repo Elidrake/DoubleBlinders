@@ -12,7 +12,7 @@ class CreateGroupsFilesTable extends Migration
      */
     public function up()
     {
-        Schema::table('groups_files', function (Blueprint $table) {
+        Schema::create('groups_files', function (Blueprint $table) {
             $table->integer('group_id')->unsigned();
 	    $table->integer('file_id')->unsigned();
 	    $table->dateTime('created_at');
