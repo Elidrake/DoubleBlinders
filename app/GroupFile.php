@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class FileComment extends Model
+class GroupFile extends Model
 {
 	/**
 	 * The database table used by the model.

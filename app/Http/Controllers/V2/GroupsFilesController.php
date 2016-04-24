@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers\API\V2;
 
 use App\Http\Controllers\Controller;
-use Response, Input, Auth;
-use App\UserFile, App\Comment, App\GroupFile;
+use Response, Input, Auth, DB;
+use App\GroupFile;
 
 class GroupsFilesController extends Controller {
 
 	public function __construct() {
-		$this->middleware('beforeGroupStoreV2', ['only' => ['store']]);
+		;
 	}
 
 	/**
@@ -19,10 +19,15 @@ class GroupsFilesController extends Controller {
 
 	public function index($groupId){
 		$files = DB::table('groups_files')
-            ->leftJoin('files', $groupId, '=', 'files.file_id')
-            ->leftJoin('groups', $groupId, '=', 'groups.group_id')
+            ->leftJoin('files', 'groups_files.file_id', '=', 'files.id')
+						->where('groups_files.group_id', $groupId)
+						->select('files.*')
             ->get();
-        return $files;
+
+		return Response::json(array(
+			'files'=>$files),
+			200
+		);
 	}
 
 	/**
@@ -37,8 +42,14 @@ class GroupsFilesController extends Controller {
 		$file_id = input['field'];
 
 		//Create Link
+		$groups_files = new GroupFile;
 		$groups_files->file_id = $file_id;
 		$groups_files->group_id = $group_id;
 		$groups_files->save();
+
+		return Response::json(array(
+			'message'=>'Successfully Attached File to Group'),
+			200
+		);
 	}
 }

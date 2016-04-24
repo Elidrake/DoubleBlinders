@@ -58,4 +58,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'api/v2', 'namespace' 
     Route::resource('groups.files.comments', 'GroupFileCommentController', ['only' => [
         'index', 'store'
     ]]);
+    Route::resource('groups.files', 'GroupsFilesController', ['only' => [
+        'index', 'store'
+    ]]);
 });
