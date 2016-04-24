@@ -29,8 +29,6 @@ class CreateGroupsFilesTable extends Migration
      */
     public function down()
     {
-        Schema::table('groups_files', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('groups_files');
     }
 }
