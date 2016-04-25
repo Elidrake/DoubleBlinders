@@ -69,4 +69,6 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'api/v2', 'namespace' 
     Route::resource('groups.files', 'GroupsFilesController', ['only' => [
         'index', 'store'
     ]]);
+    Route::resource('groups.assignments', 'GroupAssignmentController', ['only'=>[
+      'index','store']]);
 });
