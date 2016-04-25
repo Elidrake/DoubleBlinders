@@ -48,6 +48,8 @@ class GroupFileCommentController extends Controller {
 		//Create Comment
 		$comment->lineNumber = $input['lineNumber'];
 		$comment->charNumber = $input['charNumber'];
+		$comment->startChar = $input['startChar'];
+		$comment->startLine = $input['startLine'];
 		$comment->groupId = $groupId;
 		$comment->createdBy = Auth::id();
 		$comment->content = $input['content'];
