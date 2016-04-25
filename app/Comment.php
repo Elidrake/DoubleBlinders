@@ -41,8 +41,10 @@ class Comment extends Model
 			->leftJoin('comments', 'files_comments.comment_id', '=', 'comments.id')
 			->where('files.id', $fileId)
 			->where('comments.groupId', $groupId)
-			->select('comments.*')
+			->select('comments.*', 'comments.startLine', 'comments.startChar')
 			->get();
+
+
 
 		return $comments;
 	}
