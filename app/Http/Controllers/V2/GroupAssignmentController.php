@@ -19,9 +19,8 @@ class GroupAssignmentController extends Controller {
 
 	public function index($groupId){
 		$assignments = DB::table('groups_assignments')
-            ->leftJoin('assignments', 'groups_assignments.assignment_id', '=', 'assignments.id')
 			->where('groups_assignments.group_id', $groupId)
-			->select('files.*')
+			->select('groups_assignments.*')
             ->get();
 
 		return Response::json(array(
@@ -39,11 +38,9 @@ class GroupAssignmentController extends Controller {
 
 	public function store($group_id)
 	{
-		$file_id = input['assignmentId'];
-
 		//Create Link
 		$groups_assignments = new GroupAssignment;
-		$groups_assignments->assignment_id = $file_id;
+		$groups_assignments->assignment_name = $input['assignmentName'];
 		$groups_assignments->group_id = $group_id;
 		$groups_assignments->save();
 

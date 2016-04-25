@@ -39,12 +39,13 @@ class GroupsFilesController extends Controller {
 
 	public function store($group_id)
 	{
-		$file_id = input['fieId'];
+		$file_id = $input['fieId'];
 
 		//Create Link
 		$groups_files = new GroupFile;
 		$groups_files->file_id = $file_id;
 		$groups_files->group_id = $group_id;
+		$groups_files->assignment_id = $input['assignmentId'];
 		$groups_files->save();
 
 		return Response::json(array(
