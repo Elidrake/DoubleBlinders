@@ -26,6 +26,14 @@ Route::get('/review', function () {
 Route::get('/comments', function () {
     return view('comments');
 })->middleware(['web','auth']);
+
+Route::get('/classes', function () {
+    return view('group');
+})->middleware(['web','auth']);
+
+Route::get('/test', function () {
+    return view('test');
+})->middleware(['web','auth']);
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -59,9 +67,6 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'api/v2', 'namespace' 
         'index', 'store'
     ]]);
     Route::resource('groups.files', 'GroupsFilesController', ['only' => [
-        'index', 'store'
-    ]]);
-    Route::resource('groups.assignments', 'GroupAssignmentController', ['only' => [
         'index', 'store'
     ]]);
 });

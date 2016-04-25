@@ -2,31 +2,31 @@
 <html>
 	<head>
 		<meta charset="utf-8">
- 		<meta name="viewport" content="width=550px">
+ 		<meta name="viewport" content="width=device-width">
 		<meta name="viewport" content="initial-scale=1.0">
 		<title>University of Arizona Code Review</title>
-		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="stylesheet" type="text/css" href="/style.css" />
 	</head>
 	<body>
 		<header>
-				<h1><a href="/">University of Arizona &lt;&nbsp;Code&nbsp;Review&nbsp;/></a></h1>
+				<a href="/"><img id="logo" src="/images/logo@1x.png" alt="U of A Code Review Logo" ></a>
 		</header>
 		<nav>
 			<ul>
 				<li><a href="/">Home</a></li>
-				<li><a href="/review">Review</a></li>	
-				<li><a href="/comments">Comments</a></li>
+				<li><a href="/review">Review Code</a></li>	
+				<li><a href="/comments">View Comments</a></li>
 				<li><a href="/upload">Upload</a></li>
+				<li><a href="/classes">Classes</a></li>
 				<li><a href="/account/logout">Logout</a></li>
 			</ul>
 		</nav>
 		<section>
-			
 			<h2>Welcome to your U of A Code Review home page!</h2>
 			
 			<p>If you haven't already, <a href="/upload">upload</a> your latest coding assignment.</p>
 			
-			<p>Once you've done that, other students can start leaving you comments. You can check the <a href="/comment">comments page</a> to see if any students have left you comments already.</p>
+			<p>Once you've done that, other students can start leaving you comments. You can check the <a href="/comments">comments page</a> to see if any students have left you comments already.</p>
 			
 			<p>Once other students have uploaded their own code, you can check your <a href="/review">review page</a> to see if there is any code from other students that you have been assigned to review and comment on.</p>
 			
@@ -41,104 +41,16 @@
 #include &lt;string.h&gt;
 #include &lt;stdlib.h&gt;
 
-//TODO: Create Student Struct (same as last drill)
-typedef struct Student {
-    int id;
-    char* name;
-    float percent;
-    struct Student* nextStudent;
-} Student;
-
-//TODO: Create function CreateStudent (same as last drill)
-void CreateStudent(Student** stuptr, char* name, float percent) {
-	
-    int id = -1;
-    while (*stuptr != NULL) {
-        id++;
-        if ((*stuptr)-&gt;nextStudent != NULL) {
-            stuptr = &((*stuptr)-&gt;nextStudent);
-        } else {
-            break;
-        }
-    }
-    Student* newstu = (Student*)malloc(sizeof(Student));
-    newstu-&gt;id = id+1;
-    newstu-&gt;name = strdup(name);
-    newstu-&gt;percent = percent;
-    newstu-&gt;nextStudent = NULL;
-    if ((*stuptr) != NULL) {
-        (*stuptr)-&gt;nextStudent = newstu;
-    } else {
-        *stuptr = newstu;
-    }
-}
-
-//TODO: Create function RemoveStudent
-int RemoveStudent(Student** stuptr, int id) {
-    int oneElF = 1;
-    int foundElF = 0;
-    while (*stuptr != NULL) {
-        if ((*stuptr)-&gt;id == id) {
-            foundElF = 1;
-        }
-        if ((*stuptr)-&gt;nextStudent != NULL) {
-            oneElF = 0;
-            if ((*stuptr)-&gt;nextStudent-&gt;id == id) {
-                break;
-            } else {
-                stuptr = &((*stuptr)-&gt;nextStudent);
-            }
-        } else {
-            break;
-        }
-    }
-    if (foundElF == 0) {
-        return -1;
-    } else if (oneElF == 1) {
-        *stuptr = NULL;
-        return 0;
-    } else {
-        int id = (*stuptr)-&gt;nextStudent-&gt;id;
-        (*stuptr)-&gt;nextStudent = (*stuptr)-&gt;nextStudent-&gt;nextStudent;
-        return id;
-    }
-}
-
-//Do not modify main
 int main (void){
+    char* hi = "Hello, world!";
     
-    int  numOps;
     int i;
-    int id;
-    float percent;
-    int deleteResult;
-    char name [20];
-    char op;
-    Student * studentList=NULL;
-    
-    scanf(&quot;%d&quot;,&numOps);
-    
-    //Loops through and does all the testing operations
-    for (i=0; i&lt;numOps; i++){
-        scanf(&quot; %c&quot;,&op);
-        //Adds elements to Student array
-        if(op==&#39;a&#39;){
-            scanf(&quot;%s&quot;,name);
-            scanf(&quot;%f&quot;,&percent);
-            CreateStudent(&studentList, name, percent);
-        }
-        else{
-            //Removes elements from Student array
-            scanf(&quot;%d&quot;,&id);
-            deleteResult=RemoveStudent(&studentList,id);
-            if(deleteResult==-1){
-                printf(&quot;%d delete failed &quot;,id);
-            }
-        }
+    for (i = 0; i < 5; i++) {
+        printf("%d: %s\n", i+1, hi);
     }
-    while (studentList!=NULL){
-        printf(&quot;%d %s %.2f &quot;,studentList-&gt;id,studentList-&gt;name,studentList-&gt;percent);
-        studentList=studentList-&gt;nextStudent;
+    
+    for (i = 4; i > 0; i--) {
+        printf("%d: %s\n", i, hi);
     }
 }
 				</div>
@@ -147,7 +59,7 @@ int main (void){
 		</section>
 		<script src="/scripts/jquery-1.10.2.js"></script>
 		<script src="/scripts/comments.js"></script>
-		<script src="/scripts/footnote.js"></script>
+		<script src="/scripts/review.js"></script>
 		<footer>
 			<p>By Alex Guyot, John Oney, Dakota Trotter, and Carson Stelzer.</p>
 		</footer>

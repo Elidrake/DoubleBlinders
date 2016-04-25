@@ -2,19 +2,17 @@
 $(document).ready(loadAvailableCode());
 
 function loadAvailableCode() {
-	//var filesPresent = false;
+	var numFiles = 0;
 	$('#review-list').html("");
     $.getJSON("/api/v1/files", {get_param: "files"}, function(data) {
-		$.each(data, function(index, element) {
-		    $.each(element, function(key, value) {
-		    	//filesPresent = true;
-		    	$('#review-list').append('<p><a href="#" class="fileLink" data-id="' + value["id"] + '">File ' + value["id"] + ' by ' + value["createdBy"] + '</a></p>');
-		    });
+    	numFiles = data['files'].length;
+		$.each(data['files'], function(key, value) {
+		    $('#review-list').append('<p><a href="#" class="fileLink" data-id="' + value["id"] + '">File ' + value["id"] + ' by ' + value["createdBy"] + '</a></p>');
 		});
 	});
-	/*if (!filesPresent) {
-	    $('#review-list').html("<p>There are no files ready for you to review at this time.</p>");
-	}*/
+	if (numFiles == 0) {
+	    $('#review-list').html("<p>There are no files for you to review at this time.</p>");
+	}
 }
 
 $("#review-list").on("click", ".fileLink", function() {

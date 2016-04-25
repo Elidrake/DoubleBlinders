@@ -22,14 +22,17 @@
 			</ul>
 		</nav>
 		<section>
-			<h2>Code Upload</h2>
+			<h2>Your Classes</h2>
 			<div id="intro">
-			<p>Below you will see a list of coding assignments available for each class you are enrolled in. Choose an assignment and upload your code for it with the corresponding form.</p>
+			<p>Below is a list of classes that you are a part of. Drop classes with the "Remove" button on the side, or add new classes with the button at the bottom of the list.</p>
 			</div>
-			<div id="assignment-list"></div>
+			<h2>Class List</h2>
+			<div id="class-list"></div>
+			<div id="instr"></div>
+			<div id="new"></div>
 		</section>
 		<script src="/scripts/jquery-1.10.2.js"></script>
-		<script src="/scripts/upload.js"></script>
+		<script src="/scripts/classes.js"></script>
 		<footer>
 			<p>By Alex Guyot, John Oney, Dakota Trotter, and Carson Stelzer.</p>
 		</footer>
