@@ -33,9 +33,9 @@ class UserFile extends Model
 
 	public function returner(){
 		$files = DB::table('files')
-			->leftJoin('users', 'files.createdBy', '=', 'users.id')
+			->leftJoin('groups_files', 'files.id', '=', 'groups_files.file_id')
 			->select('files.id', 'files.createdBy', 'files.fileContent',
-					 'files.fileType', 'files.created_at as createdAt')
+					 'files.fileType', 'files.created_at as createdAt', 'groups_files.group_id as groupId', 'groups_files.assignment_id as assignmentId')
 			->get();
 
 		return $files;
