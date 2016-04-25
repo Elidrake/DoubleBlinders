@@ -56,7 +56,7 @@ class GroupController extends Controller {
 		foreach($emails as $email){
 			$user = User::where('email', $email)->first();
 			if(!empty($user)){
-				DB::table('users')->insert(
+				DB::table('users_groups')->insert(
 				    ['user_id' => $user->id, 'group_id' => $group->id,'role'=>2]
 				);
 			}
