@@ -20,17 +20,6 @@ class BeforeGroupStore {
 				400
 			);
 		}
-		foreach($input['users'] as $user){
-			$validator = Validator::make($user, array('email'=>'required|email','role'=>'required|integer'));
-			if(!$validator->passes()){
-				return Response::json(array(
-					'error' => True,
-					'messages' => $validator->messages()),
-					400
-				);
-			}
-		}
-
 		return $next($request);
 	}
 }
