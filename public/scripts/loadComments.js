@@ -1,42 +1,49 @@
+// get user info
+var user = (function () {
+	var role;
+	$.ajax({
+	     async: false,
+	     type: 'GET',
+	     url: '/api/v1/account',
+	     success: function(data) {
+	          role = data['account']['role'];
+	     }
+	});
+    return role;
+})();
+
 // load available code
 $(document).ready(loadAvailableCode());
 
 function loadAvailableCode() {
-	//var filesPresent = false;
+	var numFiles = 0;
 	$('#upload-list').html("");
-    $.getJSON("/api/v1/files", {get_param: "files"}, function(data) {
-		$.each(data, function(index, element) {
-		    $.each(element, function(key, value) {
-		    	// TODO: Get current user name
-		    	/*if (value["createdBy"] == "Alex") {
-			    	$('#upload-list').append('<p><a href="#" class="fileLink" data-id="' + value["id"] + '">File ' + value["id"] + ' by ' + value["createdBy"] + '</a></p>');
-			    }*/
-			    $('#upload-list').append('<p><a href="#" class="fileLink" data-id="' + value["id"] + '">File ' + value["id"] + ' by ' + value["createdBy"] + '</a></p>');
-		    });
+    $.getJSON("/api/v2/files", function(data) {
+    	numFiles = data['files'].length;
+		$.each(data['files'], function(key, value) {
+			$('#upload-list').append('<p><a href="#" class="fileLink" data-id="' + value["id"] + '">File ' + value["id"] + ' by ' + value["createdBy"] + '</a></p>');
 		});
 	});
-	/*if (!filesPresent) {
-	    $('#review-list').html("<p>There are no files ready for you to review at this time.</p>");
-	}*/
+	if (numFiles == 0) {
+	    $('#upload-list').html("<p>There are no files for you to view at this time.</p>");
+	}
 }
 
 $("#upload-list").on("click", ".fileLink", function() {
 	var id = $(this).attr('data-id');
-    $.getJSON("/api/v1/files", {get_param: "files"}, function(data) {
-		$.each(data, function(index, element) {
-		    $.each(element, function(key, value) {
-				if (value["id"] == id) {
-					fileId = id;
-				    loadComments(value["fileContent"]);
-				}
-		    });
+    $.getJSON("/api/v2/files", function(data) {
+	    $.each(data['files'], function(key, value) {
+			if (value["id"] == id) {
+				fileId = id;
+			    loadComments(value["fileContent"]);
+			}
 		});
 	});
 });
 
 function loadComments(code) {
 	$('#intro').html("");
-	$.getJSON("/api/v1/files/" + fileId + "/comments", {get_param: "comments"}, function(data) {
+	$.getJSON("/api/v2/files/" + fileId + "/comments", {get_param: "comments"}, function(data) {
 		$.each(data, function(index, element) {
 		    $.each(element, function(key, value) {
 				var lines = code.split("\n");

@@ -1,9 +1,23 @@
-var clicks = 0;
-var numComments = $("span.cspan").length;
+// vars
+var fileId = -1;
+groupId = -1;
 
 // load comments
-$(document).ready(loadComments());
+$(document).ready(prepCode());
+//$(document).ready(loadComments());
 
+// wrap lines in span tags
+// TODO: extend line "clickability" to end of line
+function prepCode() {
+	var code = "";
+    var lines = $('#code').text().split("\n");
+    for (var i = 0; i < lines.length; i++) {
+    	code += '<span class="line" id="line' + i + '">' + lines[i].replace(/</g, "&lt;") + '\n</span>';
+    }
+    $('#code').html(code);
+}
+
+// expand/contract comments on click
 $("#code").on("click", "button.cmnt", function() {
 	if ($(this).next("span.comment").html() == "") {
 		$(this).next("span.comment").html($(this).attr("data-value"));
@@ -13,132 +27,83 @@ $("#code").on("click", "button.cmnt", function() {
 		$(this).attr("data-value", $(this).next("span.comment").html());
 		$(this).next("span.comment").html("");
 	}
-	// add flipping down arrow
+	// flip arrow direction on click
+	if ($(this).html() == "(▼)") {
+		$(this).html("(▲)");
+	} else {
+		$(this).html("(▼)");
+	}
 });
 
+// focus stray clicks onto the comment input p
 $("#code").on("click", "span.placeholder", function() {
 	var p = $(event.target).parent("p.input");
 	$(event.target).remove();
 	p.focus();
 });
 
+// focus stray clicks onto the comment input p
 $("#code").on("click", "p.input", function() {
 	$(event.target).children("span.placeholder").remove();
 	$(event.target).focus();
 });
 
-$("code").on("click", ":not(span)", "#code", function() {
-	if ($(event.target).parents("span.cspan").length) {
+// add comments to lines on click
+$("#code").on("click", ".line", function() {
+	if ($(event.target).attr("id") == undefined) {
 		return;
 	}
 	var userSelection;
+	var charOffset;
 	var buttonFlag = false;
 	if (window.getSelection) {
 	    userSelection = window.getSelection();
 	    if(userSelection.anchorNode.parentElement.tagName == "BUTTON") {
-			console.log("Error: Two comments next to each other");
+			charOffset = userSelection.anchorNode.parentElement.parentElement.getAttribute('data-value');
 			buttonFlag = true;
-			return;
 	    }
 	}
-	/*else if (document.selection) { // Opera
-	    userSelection = document.selection.createRange();
-	}*/
-	
 	var range;
 	if (userSelection.getRangeAt)
 	    range = userSelection.getRangeAt(0);
 	else { // Safari
 	    range = document.createRange();
-	    range.setStart(userSelection .anchorNode, userSelection.anchorOffset);
+	    range.setStart(userSelection.anchorNode, userSelection.anchorOffset);
 	    range.setEnd(userSelection.focusNode, userSelection.focusOffset);
-	    
+	}
+	if (!buttonFlag) {
+		charOffset = range.endOffset;
+		var lastCmnt = userSelection.anchorNode.previousSibling;
+		if (lastCmnt) {
+			charOffset += parseInt(lastCmnt.getAttribute('data-value'));
+		}
 	}
 	var comment = document.createElement("span");
-	numComments++;
+	//numComments++;
 	$(comment).attr("class", "cspan");
-	comment.innerHTML = '<button class="cmnt" data-value="">(▼)</button><span class="comment" style="display: block;"><p class="input" contenteditable="true"><span class="placeholder">Insert comment here...</span></p><input type="text" class="name" placeholder="Name" value=""><button class="save">Save Comment</button></span></span>';
-	range.insertNode(comment);
-	updateCNums();
+	$(comment).attr("data-value", charOffset);
+	comment.innerHTML = '<button class="cmnt" data-value="">(▲)</button><span class="comment" style="display: block;"><p class="input" contenteditable="true"><span class="placeholder">Insert comment here...</span></p><button class="save">Save Comment</button></span></span>';
+	if (!buttonFlag) {
+		range.insertNode(comment);	
+	} else {
+		$(comment).insertAfter($(this).find('[data-value="' + charOffset + '"]'));
+	}
+	//updateCNums();
 });
 
 $("#code").on("click", "button.save", function() {
 	var comment = $(this).prevAll("p.input").text().replace(/&/g,"&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-	var name = $(this).prev("input.name").val();
-	var lineNum = getLineNum($(this).parents("span.cspan").attr("data-value"));
-	var charNum = getCharNum($(this).parents("span.cspan").attr("data-value"), lineNum);
-	//window.alert("Comment: " + comment + "\n\nName: " + name + "\n\nLine Num: " + lineNum + "\n\ncharNum: " + charNum);
-	$.post("/api/v1/comments", { lineNumber: lineNum, charNumber: charNum, userName: name, content: comment });
-});
-
-function loadComments() {
-	$.getJSON("/api/v1/comments", {get_param: "comments"}, function(data) {
-		$.each(data, function(index, element) {
-		    $.each(element, function(key, value) {
-		    	var line = $("#code").text().split("\n").slice(value["lineNumber"]-1, parseInt(value["lineNumber"]));
-		    	var otherComments = (line[0]).split("(▼)");
-/* 		    	var addComment = line.substring(0, parseInt(value["charNumber"])); */
-				var charNum = parseInt(value["charNumber"]);
-				var totalLength = 0;
-				var commentsBefore = 0;
-		    	for(var i = 0; i < otherComments.length; i++) {
-		    		if (totalLength + otherComments[i].length < charNum) {
-		    			totalLength += otherComments[i].length;
-		    			commentsBefore++;
-		    		} else {
-		    			break;
-		    		}
-		    	}
-		    	charNum += commentsBefore * 3;
-		    	var buildComment = '<span class="cspan"><button class="cmnt" data-value="<p class=&quot;input&quot; contenteditable=&quot;false&quot;>' + value["content"] + '</p><input type=&quot;text&quot; class=&quot;name&quot; value=&quot;' + value["userName"] + '&quot;></span>">(▼)</button><span class="comment" style="display: none;"></span></span>';
-		    	var addComment = line[0].substring(0, charNum).replace(/</g, "&lt;") + buildComment + line[0].substring(charNum).replace(/</g, "&lt;");
-		    	
-				var before = $("#code").html().split("\n").slice(0, value["lineNumber"]-1);
-				var after = $("#code").html().split("\n").slice(value["lineNumber"]);
-				$("#code").html(before.join("\n") + ("\n") +  addComment + ("\n") + after.join("\n"));
-				numComments++;
-		    });
-		});
-		updateCNums();
-	});
-}
-
-function getLineNum(cNum) {
-    var delimiter = "(▼)";
-    var tokens = $("#code").text().split(delimiter).slice(0, cNum);
-    var result = tokens.join(delimiter);
-    return (result.match(/\n/g) || []).length + 1;
-}
-
-function getCharNum(cNum, lineNum) {
-    var tokens = $("#code").text().split("(▼)").slice(0, cNum);
-    var line = tokens.join("");
-    var charNum = line.split("\n").slice(lineNum-1, lineNum)[0].length;
-	return charNum;
-}
-
-function updateCNums() {
-	var count = 0;
-	var comments = $("#code").children("span.cspan");
-	for(var i = 0; i < comments.length; i++) {
-		$(comments[i]).attr("data-value", ++count);
+	if (comment == "Insert comment here...") {
+		alert("Please input a comment before submitting.");
+		return;
 	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	var lineNum = parseInt($(this).parents("span.line").attr("id").substring(4));
+	var charNum = parseInt($(this).parents("span.cspan").attr("data-value"), lineNum);
+	//console.log("Comment: " + comment + "\n\nName: " + name + "\n\nLine Num: " + lineNum + "\n\ncharNum: " + charNum + "\n\nfileId: " + fileId);
+	if (fileId != -1 && groupId != -1) {
+		//alert("Comment: " + comment + "\n\nName: " + name + "\n\nLine Num: " + lineNum + "\n\ncharNum: " + charNum + "\n\nfileId: " + fileId);
+		$.post("/api/v2/groups/" + groupId + "/files/" + fileId + "/comments", { lineNumber: lineNum, charNumber: charNum, content: comment });
+	} else {
+		alert("Error - no file or group specified");
+	}
+});
