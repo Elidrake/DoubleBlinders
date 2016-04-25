@@ -54,7 +54,7 @@ class GroupController extends Controller {
 		$emails = explode(',',$users);
 
 		foreach($emails as $email){
-			$user = User::where('email', $email)->get();
+			$user = User::where('email', $email)->first();
 			dd($user);
 			if(!empty($user)){
 				DB::table('users')->insert(
