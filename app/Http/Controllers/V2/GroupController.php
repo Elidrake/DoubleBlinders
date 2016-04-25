@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\API\V2;
+<?php namespace App\Http\Controllers\V2;
 
 use App\Http\Controllers\Controller;
 use DB, Auth, Response, Input;

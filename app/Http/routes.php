@@ -56,7 +56,7 @@ Route::group(['middleware' => ['web'], 'prefix' => 'api/v1', 'namespace' => 'API
       'store', 'destroy'
   ]]);
 });
-Route::group(['middleware' => ['web','auth'], 'prefix' => 'api/v2', 'namespace' => 'API\V2'], function () {
+Route::group(['middleware' => ['web','auth'], 'prefix' => 'api/v2', 'namespace' => 'V2'], function () {
     Route::resource('files', 'FileController', ['only' => [
         'index', 'store'
     ]]);
