@@ -39,6 +39,7 @@ class FileController extends Controller {
 
 	public function store(Request $request)
 	{
+		$input = Input::all();
 		$file = new UserFile;
     	$uploaded_file = $request->file('file');
 
