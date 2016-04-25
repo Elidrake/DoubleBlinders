@@ -22,7 +22,7 @@ class Group extends Model
 	 */
 	public static $storageRulesV1 = array(
 		'groupName'=>'required|string',
-		'users'=>'required|array'
+		'users'=>'required|string'
 	);
 
 	/**

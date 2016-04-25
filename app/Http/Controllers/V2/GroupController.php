@@ -50,13 +50,16 @@ class GroupController extends Controller {
 		$user_group->role = 1;
 		$user_group->save();
 
-		foreach($input['users'] as $userwork){
-			$user = User::where('email', $userwork['email'])->get();
+		$users = $input['users'];
+		$emails = explode(',',$users);
+
+		foreach($emails as $email){
+			$user = User::where('email', $email)->get();
 			if(!empty($user)){
 				$user_group = new UserGroup;
 				$user_group->user_id = $user->id;
 				$user_group->group_id = $group->id;
-				$user_group->role = $userwork['role'];
+				$user_group->role = 2;
 				$user_group->save();
 			}
 		}
