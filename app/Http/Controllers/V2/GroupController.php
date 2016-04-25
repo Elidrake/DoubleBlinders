@@ -23,7 +23,7 @@ class GroupController extends Controller {
 		$groups = $group->returner();
 
 		return Response::json(array(
-			'groups'=>$group),
+			'groups'=>$groups),
 			200
 		);
 	}
