@@ -21,7 +21,7 @@ class BeforeGroupStore {
 			);
 		}
 		foreach($input['users'] as $user){
-			$validator = Validator::make($user, array('email'=>'required|email','role'=>'required|integer'))
+			$validator = Validator::make($user, array('email'=>'required|email','role'=>'required|integer'));
 			if(!$validator->passes()){
 				return Response::json(array(
 					'error' => True,
