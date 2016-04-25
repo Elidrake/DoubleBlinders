@@ -50,6 +50,12 @@ class FileController extends Controller {
 		$file->fileContent = $file_content;
 		$file->save();
 
+		$groups_files = new GroupFile;
+		$groups_files->file_id = $file->id;
+		$groups_files->group_id = $input['groupId'];
+		$groups_files->assignment_id = $input['assignmentId'];
+		$groups_files->save();
+
 		return Response::json(array(
 			'error' => False,
 			'message' => 'File Successfully Stored'),
