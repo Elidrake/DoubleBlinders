@@ -71,4 +71,5 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'api/v2', 'namespace' 
     ]]);
     Route::resource('groups.assignments', 'GroupAssignmentController', ['only'=>[
       'index','store']]);
+    //Change
 });

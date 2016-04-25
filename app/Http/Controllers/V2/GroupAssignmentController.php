@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Response, Input, Auth, DB;
-use App\GroupFile;
+use App\GroupFile, App\GroupAssignment;
 
 class GroupAssignmentController extends Controller {
 
