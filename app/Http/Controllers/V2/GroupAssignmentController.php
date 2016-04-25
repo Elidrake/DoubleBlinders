@@ -38,6 +38,7 @@ class GroupAssignmentController extends Controller {
 
 	public function store($group_id)
 	{
+		$input = Input::all();
 		//Create Link
 		$groups_assignments = new GroupAssignment;
 		$groups_assignments->assignment_name = $input['assignmentName'];
