@@ -14,7 +14,7 @@ class UsersGroups extends Migration
     {
         Schema::table('users_groups', function(Blueprint $table)
         {
-            $table->interements('id');
+            $table->increments('id');
         });
     }
 
