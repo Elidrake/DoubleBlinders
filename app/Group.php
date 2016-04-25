@@ -33,7 +33,7 @@ class Group extends Model
 	 */
 
 	public function returner(){
-		$your_groups = DB::table('groups')
+		$groups = DB::table('groups')
 			->select('groups.*')
 			->get();
 		if(!empty($your_groups)){
