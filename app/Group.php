@@ -33,26 +33,7 @@ class Group extends Model
 	 */
 
 	public function returner(){
-		$my_groups = DB::table('groups')
-			->leftJoin('users_groups', 'groups.id', '=', 'users_groups.group_id')
-			->where('users_groups.user_id', Auth::id())
-			->where('users_groups.role', 1)
-			->select('groups.*')
-			->get();
-		if(!empty($my_groups)){
-			foreach($my_groups as $my_group){
-				$my_group->users = DB::table('users_groups')
-					->leftJoin('users', 'users_groups.user_id', '=', 'users.id')
-					->where('users_groups.group_id', $my_group->id)
-					->select('users_groups.user_id as id', 'users.name', 'users_groups.role')
-					->get();
-			}
-		}
-
-		$your_groups = DB::table('groups')
-			->leftJoin('users_groups', 'groups.id', '=', 'users_groups.group_id')
-			->where('users_groups.user_id', Auth::id())
-			->where('users_groups.role', 2)
+		$groups = DB::table('groups')
 			->select('groups.*')
 			->get();
 		if(!empty($your_groups)){
@@ -64,7 +45,7 @@ class Group extends Model
 			}
 		}
 
-		return array_merge($my_groups, $your_groups);
+		return $groups;
 	}
 
 }
