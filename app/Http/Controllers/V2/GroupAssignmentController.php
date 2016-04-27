@@ -45,9 +45,7 @@ class GroupAssignmentController extends Controller {
 		$groups_assignments->group_id = $group_id;
 		$groups_assignments->save();
 
-		return Response::json(array(
-			'message'=>'Successfully Attached Assignment to Group'),
-			200
-		);
+		return Redirect::to('/classes');
+
 	}
 }

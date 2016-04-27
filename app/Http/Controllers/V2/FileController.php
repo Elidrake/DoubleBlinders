@@ -57,10 +57,6 @@ class FileController extends Controller {
 		$groups_files->assignment_id = $input['assignmentId'];
 		$groups_files->save();
 
-		return Response::json(array(
-			'error' => False,
-			'message' => 'File Successfully Stored'),
-			201
-		);
+		return Redirect::to('/comments');
 	}
 }

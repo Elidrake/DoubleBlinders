@@ -62,10 +62,7 @@ class GroupController extends Controller {
 			}
 		}
 
-		return Response::json(array(
-			'error' => False,
-			'message' => 'Group Successfully Created'),
-			201
-		);
+		return Redirect::to('/classes');
+
 	}
 }

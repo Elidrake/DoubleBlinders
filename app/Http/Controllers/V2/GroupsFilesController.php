@@ -48,9 +48,7 @@ class GroupsFilesController extends Controller {
 		$groups_files->assignment_id = $input['assignmentId'];
 		$groups_files->save();
 
-		return Response::json(array(
-			'message'=>'Successfully Attached File to Group'),
-			200
-		);
+		return Redirect::to('/comments');
+
 	}
 }
