@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\V2;
 
 use App\Http\Controllers\Controller;
-use Response, Input, Auth, DB;
+use Response, Input, Auth, DB, Redirect;
 use App\GroupFile;
 
 class GroupsFilesController extends Controller {

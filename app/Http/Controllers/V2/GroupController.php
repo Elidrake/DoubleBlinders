@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\V2;
 
 use App\Http\Controllers\Controller;
-use DB, Auth, Response, Input;
+use DB, Auth, Response, Input, Redirect;
 use App\User, App\Group, App\UserGroup;
 
 class GroupController extends Controller {

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Response, Input, File, Auth;
+use Response, Input, File, Auth, Redirect;
 use App\UserFile, App\GroupFile;
 
 class FileController extends Controller {
