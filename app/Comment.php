@@ -39,12 +39,17 @@ class Comment extends Model
 		$comments = DB::table('files')
 			->leftJoin('files_comments', 'files.id', '=', 'files_comments.file_id')
 			->leftJoin('comments', 'files_comments.comment_id', '=', 'comments.id')
+			->leftJoin('users', 'comments.createdBy', '=', 'users.id')
 			->where('files.id', $fileId)
 			->where('comments.groupId', $groupId)
-			->select('comments.*', 'comments.startLine', 'comments.startChar')
+			->select('comments.*', 'comments.startLine', 'comments.startChar', 'users.name')
 			->get();
 
-
+		if(Auth::user()->role!=1){
+			foreach($comments as $comment){
+				$comment->name = 'Anonymous';
+			}
+		}
 
 		return $comments;
 	}
