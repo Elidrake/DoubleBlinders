@@ -45,7 +45,7 @@ class GroupAssignmentController extends Controller {
 		$groups_assignments->group_id = $group_id;
 		$groups_assignments->save();
 
-		return Redirect::to('/classes');
+		return Redirect::to('/upload');
 
 	}
 }
